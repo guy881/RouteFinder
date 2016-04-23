@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<head>
+  <title>RouteFinder</title>
+  <meta charset="utf-8" />
+  <link href="http://volt.iem.pw.edu.pl/~muchap1/route.css" rel="stylesheet"> 
+</head>
+<body>
+   <h1>RouteFinder</h1>
+   <form method="post"> 
+   Wpisz skąd i dokąd się wybierasz :)<br>
+   <input type="text" name="z" placeholder="od"><br>
+   <input type="text" name="do" placeholder="do"><br>
+   <input type="submit" value="trasa">
+   {% if dlugosc -%}
+      <p>Długość trasy wynosi: {{dlugosc}}km</p>
+   {%- endif %}  
+   </form>
+   <img src="https://maps.googleapis.com/maps/api/staticmap?center=Poland&size=640x640&maptype=roadmap{% for miasto in cities -%}
+      {%- for k, v in miasto.iteritems() -%}
+	 {%- if k == 'h' -%}
+	    &markers=color:purple| {{v}}, 
+	 {%- elif k == 'w' -%}
+	    {{v}}
+	 {%- endif -%}
+      {%- endfor -%}
+   {%- endfor %}&path=color:red|weight:7|{% for wsp in wspolrzedne -%}
+      {%- for v in wsp -%} 
+	 {{v}}
+	 {%- if loop.first -%}
+	    ,
+	 {%- endif -%}
+      {%- endfor -%}
+      {%- if loop.last -%}
+      {%- else -%}
+	 |
+      {%- endif -%}
+      {%- endfor %}&key=..." />
+</body>
+</html>
